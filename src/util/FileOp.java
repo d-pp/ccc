@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class File {
+public class FileOp {
     private static final String RED = "\u001B[31m";
     private static final String RESET = "\u001B[0m";
     
@@ -13,9 +13,9 @@ public class File {
     private final BufferedReader in;
     private final PrintWriter out;
     
-    private File(int lvl, int n) {
+    public FileOp(int lvl, int part) {
         String lvlName = STR."level\{lvl}";
-        fileName = STR."\{lvlName}\{n <= 0 ? "example" : String.valueOf(n)}";
+        fileName = STR."\{lvlName}_\{part <= 0 ? "example" : String.valueOf(part)}";
         String inPath = Paths.get(STR."\{lvlName}/\{fileName}.in").toString();
         String outPath = Paths.get(STR."\{lvlName}/out/\{fileName}.out").toString();
         try {
@@ -24,9 +24,10 @@ public class File {
             throw new RuntimeException(red(STR."COULDN'T OPEN FILE: \{inPath}"));
         }
         try {
+            new File(outPath).getParentFile().mkdirs();
             out = new PrintWriter(outPath);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(red(STR."COULDN'T OPEN FILE: \{outPath}"));
+        } catch (IOException e) {
+            throw new RuntimeException(red(STR."COULDN'T CREATE FILE: \{outPath}"));
         }
     }
     
