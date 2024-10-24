@@ -1,19 +1,24 @@
-import util.CCC;
-import util.FileOp;
+import util.Problem
+import java.io.PrintWriter
 
-import java.util.List;
-
-public class Run {
-  public static void main() {
-    int lvl = CCC.currDir("level");
-    // lvl = 1;
-    for (int i = 0; i <= 5; i++) {
-      FileOp file = new FileOp(lvl, i);
-      new Run().run(file.lines(), file);
+fun main() {
+    val test = false
+    
+    if (test) {
+        run(Problem(part = 0))
+        return
     }
-  }
+    
+    Problem.allFromLevel().forEach {
+        run(it)
+    }
+}
 
-  public void run(List<String> lines, FileOp file) {
+fun run(problem: Problem) {
+    run(problem.input, problem.out)
+    problem.out.close()
+}    
 
-  }
+fun run(input: List<String>, output: PrintWriter) {
+    println(input)
 }
